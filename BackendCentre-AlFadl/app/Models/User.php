@@ -41,4 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function formation()
+    {
+        return $this->belongsTo(Formation::class, 'formation_id');
+    };
+
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'module_id');;
+    };
+
+    public function sorties()
+    {
+        return $this->hasMany(Sortie::class, 'formateur_id');
+    };
+
 }
