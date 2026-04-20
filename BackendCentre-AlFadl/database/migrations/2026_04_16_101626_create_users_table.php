@@ -19,8 +19,7 @@ return new class extends Migration {
             $table->string('password');
             $table->string('numTel');
             $table->string('role');
-            $table->foreignId('formation_id')->constrained('formations')->onDelete('cascade');
-//            $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
+            $table->foreignId('formation_id')->nullable()->constrained('formations')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
