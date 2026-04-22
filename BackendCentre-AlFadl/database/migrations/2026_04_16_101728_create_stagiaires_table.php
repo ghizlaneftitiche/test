@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('dateInterruption');
             $table->string('statut');
             $table->date('dateInscription');
-            $table->float('moyenneGeneral');
-            $table->float('noteDiscipline');
+            $table->float('moyenneGeneral')->nullable();
+            $table->float('noteDiscipline')->nullable();
             $table->foreignId('formation_id')->constrained('formations')->onDelete('cascade');
             $table->timestamps();
         });
