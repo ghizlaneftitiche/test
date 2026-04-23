@@ -13,37 +13,33 @@ class AdminController extends Controller
     {
         $request->validate([
             'nomComplet' => 'required|string|max:255',
-            'email_personnel' => 'required|email|unique:users,email_personnel',
-            'numTel' => 'required|string',
-            'formation_id' => 'nullable|exists:formations,id',
-            'role' => 'required|string'
+            'emailPro' => 'required|email|unique:users,email_personnel',
+            'telephone' => 'required|string',
+            'affectationId' => 'required',
+            'typeAffectation' => 'required'
         ]);
-
 
         $slugNom = Str::slug($request->nomComplet, '.');
         $emailGenere = $slugNom . '@centre-alfadl.ma';
 
-// on vérifier si l'email généré existe déjà (doublons)
         $count = User::where('email_genere', 'like', $slugNom . '%')->count();
         if ($count > 0) {
             $emailGenere = $slugNom . ($count + 1) . '@centre-alfadl.ma';
         }
 
-//  génération d'un mot de passe aléatoire (8 caractères)
         $passwordClair = Str::random(8);
+        $role = ($request->typeAffectation === 'Branche') ? 'FormateurBranche' : 'FormateurModule';
 
-//  Création de l'utilisateur
         $user = User::create([
             'nomComplet' => $request->nomComplet,
             'email_genere' => $emailGenere,
-            'email_personnel' => $request->email_personnel,
-            'numTel' => $request->numTel,
-            'role' => $request->role,
-            'formation_id' => $request->formation_id,
-            'password' => Hash::make($passwordClair), // On hache le mot de passe
+            'email_personnel' => $request->emailPro,
+            'numTel' => $request->telephone,
+            'role' => $role,
+            'formation_id' => ($request->typeAffectation === 'Branche') ? $request->affectationId : null,
+            'password' => Hash::make($passwordClair),
         ]);
 
-// (pour que l'admin puisse voir/copier le mot de passe généré)
         return response()->json([
             'message' => 'Formateur créé avec succès',
             'user' => $user,
