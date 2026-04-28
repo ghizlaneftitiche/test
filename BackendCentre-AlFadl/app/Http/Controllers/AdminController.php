@@ -37,6 +37,7 @@ class AdminController extends Controller
             'numTel' => $request->telephone,
             'role' => $role,
             'formation_id' => ($request->typeAffectation === 'Branche') ? $request->affectationId : null,
+            'module_id' => ($request->typeAffectation === 'Module') ? $request->affectationId : null,
             'password' => Hash::make($passwordClair),
             'password_clair' => $passwordClair,
         ]);
@@ -49,5 +50,23 @@ class AdminController extends Controller
                 'password' => $passwordClair
             ]
         ], 201);
+
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return response()->json([
+                'message' => 'Formateur supprimé avec succès'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la suppression : ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
