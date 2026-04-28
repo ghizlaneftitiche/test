@@ -15,4 +15,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/admin/get-modules', [RecupererDonnees::class, 'getModules']);
     Route::get('/admin/get-formateurs', [RecupererDonnees::class, 'getFormateurs']);
     Route::post('/logout', [LoginController::class, 'logout']);
+    Route::Delete('/admin/supprimer-formateur/{id}', [AdminController::class, 'destroy']);
 });
