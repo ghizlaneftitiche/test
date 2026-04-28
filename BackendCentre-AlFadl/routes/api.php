@@ -10,8 +10,9 @@ use App\Http\Controllers\LoginController;
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-Route::post('/admin/create-formateur', [AdminController::class, 'store']);
-Route::get('/admin/get-branches', [RecupererDonnees::class, 'getBranches']);
-Route::get('/admin/get-modules', [RecupererDonnees::class, 'getModules']);
-Route::post('/logout', [LoginController::class, 'logout']);
+    Route::post('/admin/create-formateur', [AdminController::class, 'store']);
+    Route::get('/admin/get-branches', [RecupererDonnees::class, 'getBranches']);
+    Route::get('/admin/get-modules', [RecupererDonnees::class, 'getModules']);
+    Route::get('/admin/get-formateurs', [RecupererDonnees::class, 'getFormateurs']);
+    Route::post('/logout', [LoginController::class, 'logout']);
 });
