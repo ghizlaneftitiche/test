@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'numTel' => '0600000000',
             'role' => 'admin',
+            'password_clair' => 'admin123',
             'formation_id' => null,
         ]);
     }

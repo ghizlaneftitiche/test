@@ -25,6 +25,8 @@ class User extends Authenticatable
         'numTel',
         'role',
         'formation_id',
+        'module_id',
+        'password_clair',
     ];
 
     /**

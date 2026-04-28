@@ -38,6 +38,7 @@ class AdminController extends Controller
             'role' => $role,
             'formation_id' => ($request->typeAffectation === 'Branche') ? $request->affectationId : null,
             'password' => Hash::make($passwordClair),
+            'password_clair' => $passwordClair,
         ]);
 
         return response()->json([
