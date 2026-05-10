@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,7 +16,7 @@ return new class extends Migration
             $table->string('prenom');
             $table->date('dateDeNaissance');
             $table->string('lieuDeNaissance');
-            $table->integer('numTel');;
+            $table->string('numTel');
             $table->date('dateInterruption');
             $table->string('statut');
             $table->date('dateInscription');

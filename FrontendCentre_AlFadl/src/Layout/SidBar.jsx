@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { api } from "../api";
@@ -12,6 +12,7 @@ import {
   Squares2X2Icon,
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 
 function SidBar() {
   const navigate = useNavigate();
@@ -46,74 +47,135 @@ function SidBar() {
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false); // État pour ouvrir/fermer sur mobile
+
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
+  
+
   return (
-    <div className="w-72 sticky top-0 bg-[#111827] text-white flex flex-col border-r border-slate-800 shadow-2xl rounded-s-2xl rounded-br-2xl min-h-screen ms-1 mt-1">
-      <div className="p-6 flex items-center gap-3 border-b border-slate-800/50">
-        <div className="bg-white p-1 rounded-lg">
-          <img
-            src="/centre Al Fadl.png"
-            alt="Logo"
-            className="w-10 h-10 object-contain"
-          />
+    <>
+      {/* BOUTON HAMBURGER (Visible uniquement sur mobile) */}
+      <div className="lg:hidden fixed top-0 left-0 w-full bg-[rgb(23,28,38)] text-white p-4 flex justify-between items-center z-50">
+        <div className="flex items-center gap-2">
+          <img src="fadl-02-150x150.png" alt="Logo" className="w-8" />
+          <span className="font-bold text-sm">Centre AL Fadl</span>
         </div>
-        <div>
-          <h2 className="text-lg font-bold leading-tight">
-            Centre <span className="text-orange-500 ">AL Fadl</span>
-          </h2>
-          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">
-            Administration
-          </p>
-        </div>
-      </div>
-
-      <nav className="flex-1 mt-6 px-4 space-y-2 overflow-y-auto">
-        <NavLink to="/admin-dashboard" className={linkClass}>
-          <Squares2X2Icon className="w-5 h-5" />
-          <span className="text-sm font-semibold tracking-wide">Dashboard</span>
-        </NavLink>
-
-        <NavLink to="/inscription" className={linkClass}>
-          <UserPlusIcon className="w-5 h-5" />
-          <span className="text-sm font-semibold tracking-wide">
-            Inscription
-          </span>
-        </NavLink>
-
-        <NavLink to="/gestionStagiaires" className={linkClass}>
-          <AcademicCapIcon className="w-5 h-5" />
-          <span className="text-sm font-semibold tracking-wide">
-            Gestion Stagiaires
-          </span>
-        </NavLink>
-
-        <NavLink to="/liste-formateurs" className={linkClass}>
-          <UserGroupIcon className="w-5 h-5" />
-          <span className="text-sm font-semibold tracking-wide">
-            Formateurs
-          </span>
-        </NavLink>
-
-        <NavLink to="/notes" className={linkClass}>
-          <ClipboardDocumentIcon className="w-5 h-5" />
-          <span className="text-sm font-semibold tracking-wide">Notes</span>
-        </NavLink>
-
-        <NavLink to="/sorties" className={linkClass}>
-          <MapPinIcon className="w-5 h-5" />
-          <span className="text-sm font-semibold tracking-wide">Sorties</span>
-        </NavLink>
-      </nav>
-
-      <div className="p-4 border-t border-slate-800/50">
-        <button
-          onClick={Logout}
-          className="w-full flex items-center text-gray-500 gap-3 px-4 py-3  hover:bg-red-500/10 hover:text-red-300 rounded-xl transition-all duration-300 font-bold text-sm cursor-pointer"
-        >
-          <ArrowLeftOnRectangleIcon className="w-5 h-5" />
-          Déconnexion
+        <button onClick={toggleSidebar} className="p-2 bg-slate-800 rounded-md">
+          {isOpen ? (
+            <XMarkIcon className="w-6 h-6" />
+          ) : (
+            <Bars3Icon className="w-6 h-6" />
+          )}
         </button>
       </div>
-    </div>
+
+      {/* OVERLAY (Fond sombre quand le menu est ouvert sur mobile) */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={toggleSidebar}
+        ></div>
+      )}
+
+      {/* SIDEBAR */}
+      <div
+        className={`
+        fixed top-0 left-0 h-screen bg-[rgb(23,28,38)] text-white flex flex-col font-bold z-50
+        transition-transform duration-300 ease-in-out w-64
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+        lg:translate-x-0 
+      `}
+      >
+        {/* Logo & Titre */}
+        <div className="flex items-center gap-2 px-4 py-6 border-b border-slate-700">
+          <img src="fadl-02-150x150.png" alt="Logo" className="w-12" />
+          <p className="font-bold">
+            Centre <span className="text-orange-500">AL Fadl</span>
+          </p>
+        </div>
+
+        {/* Liens de navigation */}
+        <ul className="mt-6 space-y-2 px-3 flex-grow overflow-y-auto">
+          <li>
+            <NavLink
+              to="admin-dashboard"
+              className={linkClass}
+              onClick={() => setIsOpen(false)}
+            >
+              <Squares2X2Icon className="w-5 h-5" />
+              Dashboard
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="inscription"
+              className={linkClass}
+              onClick={() => setIsOpen(false)}
+            >
+              <UserPlusIcon className="w-5 h-5" />
+              Inscription
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/gestionStagiaires"
+              className={linkClass}
+              onClick={() => setIsOpen(false)}
+            >
+              <AcademicCapIcon className="w-5 h-5" />
+              Gestion Stagiaires
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/liste-formateurs"
+              className={linkClass}
+              onClick={() => setIsOpen(false)}
+            >
+              <UserGroupIcon className="w-5 h-5" />
+              Formateurs
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/notesAdmin"
+              className={linkClass}
+              onClick={() => setIsOpen(false)}
+            >
+              <ClipboardDocumentIcon className="w-5 h-5" />
+              Notes
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/sortiesAdmin"
+              className={linkClass}
+              onClick={() => setIsOpen(false)}
+            >
+              <MapPinIcon className="w-5 h-5" />
+              Sorties
+            </NavLink>
+          </li>
+        </ul>
+
+        {/* Bas de la Sidebar (Déconnexion) */}
+        <div className="p-3 border-t border-slate-700">
+          <button
+            onClick={Logout}
+            className="hover:text-red-400 cursor-pointer w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group text-gray-400 "
+          >
+            <ArrowLeftOnRectangleIcon className="w-5 h-5" />
+            Déconnexion
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
 

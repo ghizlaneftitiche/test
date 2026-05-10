@@ -9,6 +9,8 @@ class Sortie extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['lieuSortie', 'dateSortie', 'formateur_id'];
+
     public function formateur()
     {
         return $this->belongsTo(User::class, 'formateur_id');

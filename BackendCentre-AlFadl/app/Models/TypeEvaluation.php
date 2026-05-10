@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TypeEvaluation extends Model
 {
     use HasFactory;
+    protected $table = 'type_evaluations';
+
+    protected $fillable = ['type'];
 
     public function notes()
     {
