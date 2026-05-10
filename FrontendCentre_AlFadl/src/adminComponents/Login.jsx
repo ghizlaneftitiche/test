@@ -9,6 +9,7 @@ import {
   EyeSlashIcon,
 } from "@heroicons/react/24/outline";
 import Loading from "../Layout/Loading";
+import { api } from "../api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
+      const response = await axios.post(api+"/api/login", {
         email_genere: email,
         password: password,
       });

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Plus, CalendarDays, Trash2, MapPin } from "lucide-react";
 import Loading from "../../Layout/Loading";
+import { api } from "../../api";
 
 const SortiesPage = () => {
   const [sorties, setSorties] = useState([]);
@@ -9,7 +10,7 @@ const SortiesPage = () => {
   const [formData, setFormData] = useState({ lieuSortie: "", dateSortie: "" });
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_URL = "http://localhost:8000/api/sorties";
+  const API_URL = api+"/api/sorties";
 
   const fetchSorties = async () => {
     try {
